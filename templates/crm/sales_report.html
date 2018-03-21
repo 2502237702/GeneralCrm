@@ -1,0 +1,20 @@
+{% extends 'crm/customers.html' %}
+
+{% block breadcrumb %}
+<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+<ol class="breadcrumb">
+    <li><a href="#">Home</a></li>
+    <li class="active"><a href="{% url 'sales_report' %}">销售报表</a></li>
+</ol>
+{% endblock %}
+
+{% block page-title-text %}
+  <h1 class="page-header text-overflow">销售报表</h1>
+
+{% endblock %}
+
+{% block page-content %}
+
+page content
+
+{% endblock %}

@@ -1,0 +1,98 @@
+{% extends 'base.html' %}
+
+{% block css %}
+    <style>
+        html，body,#container,canvas{
+            width:100% ;
+            height:100% ;
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+	<div id="container" class="cls-container" style="opacity: 0.99">
+		
+		<canvas style="position: fixed; top: 0; left: 0; z-index: -1;"></canvas>
+
+		<div id="bg-overlay" class="bg-img img-balloon"></div>
+
+		<div class="cls-header cls-header-lg">
+			<div class="cls-brand">
+				<a class="box-inline" href="index.html">
+					<!-- <img alt="Nifty Admin" src="img/logo.png" class="brand-icon"> -->
+					<span class="brand-title">GeneralCRM <span class="text-thin">个人学习作</span></span>
+				</a>
+			</div>
+		</div>
+
+		<div class="cls-content">
+			<div class="cls-content-sm panel">
+				<div class="panel-body">
+					<p class="pad-btm" style="font-size: 25px;color: coral;">登陆你的账户</p>
+					<form method="post">{% csrf_token %}
+						<div class="form-group">
+							<div class="input-group">
+								<div class="input-group-addon"><i class="fa fa-user"></i></div>
+								<input type="text" name="username" class="form-control" placeholder="Username">
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="input-group">
+								<div class="input-group-addon"><i class="fa fa-asterisk"></i></div>
+								<input type="password" name="password" class="form-control" placeholder="Password">
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="input-group">
+								<div class="input-group-addon">
+                                    <img height="35px" src="/static/verify_code_imgs/{{ today_str }}/{{ filename }}.png">
+                                </div>
+								<input style="height: 50px" type="text" name="verify_code" class="form-control" placeholder="验证码">
+								<input  type="hidden" name="verify_code_key" value="{{ filename }}" >
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-xs-1">
+								<div class="form-group text-right">
+								<button class="btn btn-success text-uppercase" type="submit" style="font-size: 15px">登 陆</button>
+								</div>
+							</div>
+						</div>
+                        {% if error %}
+                            <span style="color: red">{{ error.error }}</span>
+                        {% endif %}
+
+					</form>
+				</div>
+			</div>
+		</div>
+		
+
+	</div>
+
+{% endblock %}
+
+
+{% block js %}
+    <script src="/static/js/mycanvas.js"></script>
+    <script>
+        window.onload = function(){
+            //配置
+            var config = {
+                vx: 4,//点x轴速度,正为右，负为左
+                vy:  4,//点y轴速度
+                height: 2,//点高宽，其实为正方形，所以不宜太大
+                width: 2,
+                count: 200,//点个数
+                color: "255, 75, 0",//点颜色
+                stroke: "255, 75, 0",//线条颜色
+                dist: 18000,//点吸附距离
+                e_dist: 20000,//鼠标吸附加速距离
+                max_conn: 5//点到点最大连接数
+            };
+            //调用
+            CanvasParticle(config);
+        }
+    </script>
+{% endblock %}
+

@@ -1,0 +1,234 @@
+{% extends 'kingadmin/base.html' %}
+
+{% load admin_tags %}
+
+{% block body %}
+	<div id="container" class="effect mainnav-lg">
+		
+		<!--NAVBAR-->
+		<!--===================================================-->
+		<header id="navbar">
+			<div id="navbar-container" class="boxed">
+
+				<!--Brand logo & name-->
+				<!--================================-->
+				<div class="navbar-header">
+					<a href="/kingadmin/" class="navbar-brand">
+						<img src="/static/img/logo.png" alt="Nifty Logo" class="brand-icon">
+						<div class="brand-title">
+							<span class="brand-text">KingAdmin</span>
+						</div>
+					</a>
+				</div>
+				<!--================================-->
+				<!--End brand logo & name-->
+
+
+				<!--Navbar Dropdown-->
+				<!--================================-->
+				<div class="navbar-content clearfix">
+					<ul class="nav navbar-top-links pull-left">
+
+						<!--Navigation toogle button-->
+						<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+						<li class="tgl-menu-btn">
+							<a class="mainnav-toggle" href="#">
+								<i class="fa fa-navicon fa-lg"></i>
+							</a>
+						</li>
+						<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+						<!--End Navigation toogle button-->
+
+					</ul>
+					<ul class="nav navbar-top-links pull-right">
+
+                        <li class="dropdown">
+							<a class="lang-selector dropdown-toggle" href="#" data-toggle="dropdown">
+								<span class="lang-selected">
+									<img class="lang-flag" src="/static/img/China.png" alt="English">
+									<span class="lang-name">简体中文</span>
+								</span>
+							</a>
+						</li>
+
+						<!--User dropdown-->
+						<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+						<li id="dropdown-user" class="dropdown">
+							<a href="#" data-toggle="dropdown" class="dropdown-toggle text-right">
+								<span class="pull-right">
+									<img class="img-circle img-user media-object" src="/static/img/av1.png" alt="Profile Picture">
+								</span>
+								<div class="username hidden-xs">{{ request.user.name }}</div>
+							</a>
+
+
+							<div class="dropdown-menu dropdown-menu-md dropdown-menu-right with-arrow panel-default">
+
+
+								<!-- User dropdown menu -->
+								<ul class="head-list">
+									<li>
+										<a href="{% url 'personal_password_reset'  %}">
+											<i class="fa fa-user fa-fw fa-lg"></i> Change Password
+										</a>
+									</li>
+								</ul>
+
+								<!-- Dropdown footer -->
+								<div class="pad-all text-right">
+									<a href="{% url 'acc_logout' %}" class="btn btn-primary">
+										<i class="fa fa-sign-out fa-fw"></i> Logout
+									</a>
+								</div>
+							</div>
+						</li>
+						<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+						<!--End user dropdown-->
+
+					</ul>
+				</div>
+				<!--================================-->
+				<!--End Navbar Dropdown-->
+
+			</div>
+		</header>
+		<!--===================================================-->
+		<!--END NAVBAR-->
+
+		<div class="boxed">
+
+			<!--CONTENT CONTAINER-->
+			<!--===================================================-->
+			<div id="content-container">
+				
+				<!--Page Title-->
+				<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+				<div id="page-title">
+
+					<h1 class="page-header text-overflow">{% block page-title-text %}你的页面标题{% endblock %}</h1>
+
+					<!--Searchbox-->
+                    {% block searchbox %}
+
+                    {% endblock %}
+
+				</div>
+				<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+				<!--End page title-->
+
+
+				<!--Breadcrumb-->
+                {% block breadcrumb %}
+
+                {% endblock %}
+				<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+				<!--End breadcrumb-->
+
+
+		
+
+				<!--Page content-->
+				<!--===================================================-->
+				<div id="page-content">
+					{% block page-content %}
+					
+
+
+				    {% endblock %}
+				</div>
+				<!--===================================================-->
+				<!--End page content-->
+
+
+			</div>
+			<!--===================================================-->
+			<!--END CONTENT CONTAINER-->
+
+
+			
+			<!--MAIN NAVIGATION-->
+			<!--===================================================-->
+			{% block mainnav-container %}
+            <nav id="mainnav-container">
+				<div id="mainnav">
+
+
+					<div id="mainnav-menu-wrap">
+						<div class="nano">
+
+							<div class="nano-content">
+                                {% block left-side-menu %}
+								<ul id="mainnav-menu" class="list-group">
+
+                                    <li class="list-header">请开始你的表演</li>
+                                    {% for app_name,admin_class_dic in enabled_admins.items %}
+                                    <li >
+                                        <a href="{% url 'app_tables' app_name %}">
+                                            <i class="fa fa-play-circle"></i>
+                                            <span class="menu-title">{{ app_name }}</span>
+                                        </a>
+                                    </li>
+                                    {% endfor %}
+
+								</ul>
+
+                                {% endblock %}
+							</div>
+
+						</div>
+					</div>
+					<!--================================-->
+					<!--End menu-->
+
+				</div>
+			</nav>
+			<!--===================================================-->
+			<!--END MAIN NAVIGATION-->
+			{% endblock %}
+
+		</div>
+
+		
+
+        <!-- FOOTER -->
+        <!--===================================================-->
+        <footer id="footer">
+
+
+            <div class="hide-fixed pull-right pad-rgt">Currently beta v1.0</div>
+
+
+
+            <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+            <!-- Remove the class name "show-fixed" and "hide-fixed" to make the content always appears. -->
+            <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+
+            <p class="pad-lft">&#0169; 2018 Proudly Powered By LSH</p>
+
+
+
+        </footer>
+        <!--===================================================-->
+        <!-- END FOOTER -->
+
+
+        <!-- SCROLL TOP BUTTON -->
+        <!--===================================================-->
+        <button id="scroll-top" class="btn"><i class="fa fa-chevron-up"></i></button>
+        <!--===================================================-->
+
+
+
+	</div>
+	<!--===================================================-->
+	<!-- END OF CONTAINER -->
+
+
+	
+{% endblock %}
+
+{% block js %}
+
+    <script src="/static/kingadmin/js/kingadmin/king_admin.js" > </script>
+
+{% endblock %}

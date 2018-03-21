@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+
+{% block css %}
+    <style>
+        html，body,#container,canvas{
+            width:100% ;
+            height:100% ;
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+<div id="container" class="cls-container" style="opacity: 0.99">
+
+    <canvas style="position: fixed; top: 0; left: 0; z-index: -1;"></canvas>
+
+    <div class="panel col-md-4 col-lg-push-4" style="margin-top: 50px;">
+        <div class="panel-heading" style="height: 60px">
+            <h1 class="panel-title text-center" style="font-size: 25px;color: #5bc0de">欢迎来到管理系统主页</h1>
+        </div>
+        <div class="panel-body">
+            <div class="list-group">
+                <a href="{% url 'my_courses' %}" class="list-group-item active">
+                    <h4 class="list-group-item-heading text-thin">学员入口</h4>
+                    <p class="list-group-item-text" style="color: #1c1e21">学员可以进行成绩查询\作业管理\下载学习资料等</p>
+                </a>
+                <a href="{% url 'crm_dashboard' %}" class="list-group-item ">
+                    <h4 class="list-group-item-heading text-thin">CRM入口</h4>
+                    <p class="list-group-item-text" style="color: #1c1e21">招生团队对客户进行纪录、追踪、为学员办理报名手续等</p>
+                </a>
+                <a href="{% url 'teacher_dashboard' %}" class="list-group-item ">
+                    <h4 class="list-group-item-heading text-thin">讲师入口</h4>
+                    <p class="list-group-item-text" style="color: #1c1e21">讲师可以通过此系统进行在线点名、批复学生作业、上传课件等</p>
+                </a>
+                <a href="{% url 'table_index' %}" class="list-group-item ">
+                    <h4 class="list-group-item-heading text-thin">管理员入口</h4>
+                    <p class="list-group-item-text" style="color: #1c1e21">管理员通过KingAdmin管理各数据库表 </p>
+                </a>
+            </div>
+        </div>
+    </div>
+
+</div>
+{% endblock %}
+
+{% block js %}
+    <script src="/static/js/mycanvas.js"></script>
+    <script>
+        window.onload = function(){
+            //配置
+            var config = {
+                vx: 4,//点x轴速度,正为右，负为左
+                vy:  4,//点y轴速度
+                height: 2,//点高宽，其实为正方形，所以不宜太大
+                width: 2,
+                count: 200,//点个数
+                color: "0, 125, 255",//点颜色
+                stroke: "0, 125, 255",//线条颜色
+                dist: 18000,//点吸附距离
+                e_dist: 20000,//鼠标吸附加速距离
+                max_conn: 5//点到点最大连接数
+            };
+            //调用
+            CanvasParticle(config);
+        }
+    </script>
+{% endblock %}
+

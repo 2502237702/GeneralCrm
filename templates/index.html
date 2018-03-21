@@ -1,0 +1,224 @@
+{% extends 'base.html' %}
+
+{% load custom_tags %}
+
+{% block body %}
+
+	<div id="container" class="effect mainnav-lg">
+		
+
+		<header id="navbar">
+			<div id="navbar-container" class="boxed">
+
+				<!--Brand logo & name-->
+				<!--================================-->
+				<div class="navbar-header">
+					<a href="#" class="navbar-brand">
+						<img src="/static/img/logo.png" alt="Nifty Logo" class="brand-icon">
+						<div class="brand-title">
+							<span class="brand-text">管理系统</span>
+						</div>
+					</a>
+				</div>
+				<!--================================-->
+				<!--End brand logo & name-->
+
+
+				<!--Navbar Dropdown-->
+				<!--================================-->
+				<div class="navbar-content clearfix">
+					<ul class="nav navbar-top-links pull-left">
+
+						<!--Navigation toogle button-->
+						<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+						<li class="tgl-menu-btn">
+							<a class="mainnav-toggle" href="#">
+								<i class="fa fa-navicon fa-lg"></i>
+							</a>
+						</li>
+						<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+						<!--End Navigation toogle button-->
+
+					</ul>
+					<ul class="nav navbar-top-links pull-right">
+
+						<!--Language selector-->
+						<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+						<li class="dropdown">
+							<a class="lang-selector dropdown-toggle" href="#" data-toggle="dropdown">
+								<span class="lang-selected">
+									<img class="lang-flag" src="/static/img/China.png" alt="English">
+									<span class="lang-name">简体中文</span>
+								</span>
+							</a>
+						</li>
+						<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+						<!--End language selector-->
+
+						<!--User dropdown-->
+						<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+						<li id="dropdown-user" class="dropdown">
+							<a href="#" data-toggle="dropdown" class="dropdown-toggle text-right">
+								<span class="pull-right">
+									<img class="img-circle img-user media-object" src="/static/img/av1.png" alt="Profile Picture">
+								</span>
+								<div class="username hidden-xs">{{ request.user.name }}</div>
+							</a>
+
+
+							<div class="dropdown-menu dropdown-menu-md dropdown-menu-right with-arrow panel-default">
+
+								<!-- User dropdown menu -->
+								<ul class="head-list">
+									<li>
+										<a href="#">
+											<span class="label label-success pull-right">还未完成</span>
+											<i class="fa fa-gear fa-fw fa-lg"></i> Settings
+										</a>
+									</li>
+								</ul>
+
+								<!-- Dropdown footer -->
+								<div class="pad-all text-right">
+									<a href="{% url 'logout' %}" class="btn btn-primary">
+										<i class="fa fa-sign-out fa-fw"></i> Logout
+									</a>
+								</div>
+							</div>
+						</li>
+						<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+						<!--End user dropdown-->
+
+					</ul>
+				</div>
+				<!--================================-->
+				<!--End Navbar Dropdown-->
+
+			</div>
+		</header>
+
+
+		<div class="boxed">
+
+			<!--CONTENT CONTAINER-->
+			<!--===================================================-->
+			<div id="content-container">
+				
+
+				<div id="page-title">
+					<h1 class="page-header text-overflow">{% block page-title-text %}你的页面标题{% endblock %}</h1>
+
+					<!--Searchbox-->
+                    {% block searchbox %}
+
+                    {% endblock %}
+				</div>
+
+
+
+				<!--Breadcrumb-->
+                {% block breadcrumb %}
+
+                {% endblock %}
+				<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+				<!--End breadcrumb-->
+
+				<!--Page content-->
+				<!--===================================================-->
+				<div id="page-content">
+					{% block page-content %}
+
+				    {% endblock %}
+				</div>
+				<!--===================================================-->
+				<!--End page content-->
+
+
+			</div>
+			<!--===================================================-->
+			<!--END CONTENT CONTAINER-->
+
+
+
+			<nav id="mainnav-container">
+				<div id="mainnav">
+
+					<div id="mainnav-menu-wrap">
+						<div class="nano">
+
+							<div class="nano-content">
+                                {% block left-side-menu %}
+
+								<ul id="mainnav-menu" class="list-group">
+						
+									<!--Category name-->
+									<li class="list-header">请开始你的表演</li>
+
+                                    {% load_menus request  as menus %}
+                                    {% for m in menus %}
+                                        {% if not m.sub_menus.select_related %}
+                                            <li >
+
+                                                <a href="{% if m.url_type == 0 %}{% url m.url_name %}{% else %}{{ m.url_name }}{% endif %}">
+                                                    <i class="fa fa-plane"></i>
+                                                    <span class="menu-title">{{ m.name }}</span>
+                                                </a>
+                                            </li>
+                                        {% else %}
+                                            <li class="">
+                                                <a href="{% if m.url_type == 0 %}{% url m.url_name %}{% else %}{{ m.url_name }}{% endif %}">
+                                                    <i class="fa fa-th"></i>
+                                                    <span class="menu-title">{{ m.name }}</span>
+                                                    <i class="arrow"></i>
+                                                </a>
+
+                                                <!--Submenu-->
+                                                <ul class="collapse">
+                                                    {% for sub_menu in m.sub_menus.select_related %}
+                                                        <li><a href="{% if sub_menu.url_type == 0 %}{% url  sub_menu.url_name  %}{% else %}{{ sub_menu.url_name }}{% endif %}">{{ sub_menu.name }}</a></li>
+                                                    {% endfor %}
+
+                                                </ul>
+                                            </li>
+                                        {% endif %}
+                                    {% endfor %}
+									<!--Menu list item-->
+
+
+
+								</ul>
+
+
+                                {% endblock %}
+							</div>
+
+						</div>
+					</div>
+					<!--================================-->
+					<!--End menu-->
+
+				</div>
+			</nav>
+			<!--===================================================-->
+			<!--END MAIN NAVIGATION-->
+			
+
+		</div>
+
+
+        <footer id="footer">
+
+            <div class="hide-fixed pull-right pad-rgt">版本号v1.0.0</div>
+
+            <p class="pad-lft">&#0169; 2018个人学习作品</p>
+
+        </footer>
+
+
+        <button id="scroll-top" class="btn"><i class="fa fa-chevron-up"></i></button>
+
+
+
+	</div>
+
+{% endblock %}
